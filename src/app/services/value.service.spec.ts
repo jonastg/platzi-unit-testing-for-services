@@ -1,10 +1,14 @@
+import { TestBed } from '@angular/core/testing';
 import { ValueService } from './value.service';
 
-fdescribe('ValueService', () => {
+describe('ValueService', () => {
   let service: ValueService;
 
   beforeEach(() => {
-    service = new ValueService();
+    TestBed.configureTestingModule({
+      providers: [ValueService],
+    });
+    service = TestBed.inject(ValueService);
   });
 
   it('should be created', () => {
@@ -36,6 +40,13 @@ fdescribe('ValueService', () => {
     it('should return "[promise] simple value" from promise using async', async () => {
       const result = await service.getValueAsPromise();
       expect(result).toBe('[promise] simple value');
+    });
+
+    it('should return "[observable] simple value" from observable', (doneFn) => {
+      service.getValueAsObservable().subscribe((value) => {
+        expect(value).toBe('[observable] simple value');
+        doneFn();
+      });
     });
   });
 });
