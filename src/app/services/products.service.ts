@@ -80,15 +80,15 @@ export class ProductsService {
     return this.http.get<Product>(`${this.apiUrl}/products/${id}`).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === HttpStatusCode.Conflict) {
-          return throwError(() => 'Algo esta fallando en el server');
+          return throwError(() => 'Something went wrong in the server');
         }
         if (error.status === HttpStatusCode.NotFound) {
-          return throwError(() => 'El producto no existe');
+          return throwError(() => 'The product does not exist');
         }
         if (error.status === HttpStatusCode.Unauthorized) {
-          return throwError(() => 'No estas permitido');
+          return throwError(() => 'Not allowed');
         }
-        return throwError(() => 'Ups algo salio mal');
+        return throwError(() => 'Oops something went wrong');
       })
     );
   }
